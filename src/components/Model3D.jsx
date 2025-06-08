@@ -1,18 +1,16 @@
 import React, { Suspense, useRef, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, useAnimations, useFBX } from "@react-three/drei";
+import { OrbitControls, useAnimations, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
-// Ant Model with Animations (no textures)
+// Ant Model with Animations (GLB)
 function AnimatedAnt({ onLoaded }) {
   const group = useRef();
-  const fbx = useFBX("/assets/robot.fbx");
-
-  const { animations } = fbx;
+  const { scene, animations } = useGLTF("/assets/robot.glb");
   const { actions } = useAnimations(animations, group);
 
   useEffect(() => {
-    if (actions) {
+    if (actions && Object.values(actions).length > 0) {
       Object.values(actions).forEach((action) => {
         action.reset().fadeIn(1).play();
         action.setLoop(THREE.LoopRepeat, Infinity);
@@ -23,16 +21,14 @@ function AnimatedAnt({ onLoaded }) {
   }, [actions]);
 
   useEffect(() => {
-    if (fbx) {
-      onLoaded(); // Notify parent when model is ready
-    }
-  }, [fbx, onLoaded]);
+    if (onLoaded) onLoaded();
+  }, [onLoaded]);
 
   return (
     <primitive
       ref={group}
-      object={fbx}
-      scale={0.013}
+      object={scene}
+      scale={1.013}
       position={[0, 0, 0]}
       castShadow
       receiveShadow
@@ -79,7 +75,7 @@ function MovingLights() {
         ref={spotLightRef}
         intensity={0.5}
         angle={0.3}
-        penumbra={5.5}
+        penumbra={1.5}
         position={[0, 6, 2]}
         castShadow
         shadow-mapSize-width={1024}
@@ -116,7 +112,7 @@ export default function Model3D() {
         style={{ visibility: loading ? "hidden" : "visible" }}
       >
         <Canvas shadows camera={{ position: [5, 2, 5], fov: 45 }}>
-          <ambientLight intensity={0.8} />
+          <ambientLight intensity={0.5} />
           <directionalLight
             position={[1, 15, 7]}
             intensity={0.8}
