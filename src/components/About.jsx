@@ -64,7 +64,7 @@ const About = () => {
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
       >
-        Tentang Kami
+        Tentang
       </motion.h2>
 
       <motion.p
