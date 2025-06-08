@@ -4,7 +4,7 @@ import "aos/dist/aos.css";
 import { Link } from "react-scroll";
 import Model3D from "./Model3D";
 import { motion, AnimatePresence } from "framer-motion";
-import Typical from "react-typical";
+import Typewriter from "typewriter-effect";
 
 const Hero = () => {
   const [showText, setShowText] = useState(false);
@@ -87,19 +87,20 @@ const Hero = () => {
                   Hai, klik aku ya! 👋
                 </p>
               ) : showText ? (
-                <Typical
-                  steps={[
-                    "Hi.. apa yang bisa èlv bantu?",
-                    3000,
-                    "Mau cari properti?",
-                    2000,
-                    "Atau ingin konsultasi?",
-                    2000,
-                  ]}
-                  wrapper="p"
-                  loop={1}
-                  className="text-sm sm:text-base"
-                />
+                <div className="text-sm sm:text-base">
+                  <Typewriter
+                    options={{
+                      strings: [
+                        "Hi.. apa yang bisa èlv bantu?",
+                        "Mau cari properti?",
+                        "Atau ingin konsultasi?",
+                      ],
+                      autoStart: true,
+                      loop: false,
+                      delay: 50,
+                    }}
+                  />
+                </div>
               ) : null}
             </motion.div>
           </AnimatePresence>
