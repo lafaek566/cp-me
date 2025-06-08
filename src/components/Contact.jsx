@@ -7,6 +7,9 @@ const Contact = () => {
   const [errors, setErrors] = useState({});
   const [sending, setSending] = useState(false);
 
+  // State untuk toggle maps
+  const [showMap, setShowMap] = useState(false);
+
   const validate = () => {
     let errs = {};
     if (!form.name.trim()) errs.name = "Nama harus diisi";
@@ -97,22 +100,34 @@ const Contact = () => {
             </p>
           </div>
 
-          {/* Google Maps embed selalu muncul */}
-          <div
-            id="map-container"
-            className="mt-4 w-full h-64 rounded-lg overflow-hidden border border-yellow-400 shadow-md"
+          {/* Toggle Button untuk Google Maps */}
+          <button
+            onClick={() => setShowMap(!showMap)}
+            className="mt-4 px-4 py-2 bg-yellow-500 text-yellow-900 font-semibold rounded-md hover:bg-yellow-600 transition-colors shadow-md"
+            aria-expanded={showMap}
+            aria-controls="map-container"
           >
-            <iframe
-              title="Lokasi Peta"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.562921393636!2d124.89124777501974!3d-9.103519990960788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2cffbe68c14ee4ff%3A0xe1f486929a0e42bb!2sJl.%20Proklamasi%2C%20Berdao%2C%20Kec.%20Atambua%20Bar.%2C%20Kabupaten%20Belu%2C%20Nusa%20Tenggara%20Tim.!5e0!3m2!1sen!2sid!4v1749395446642!5m2!1sen!2sid"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </div>
+            {showMap ? "Tutup Peta" : "Lihat Peta"}
+          </button>
+
+          {/* Google Maps embed muncul hanya kalau showMap true */}
+          {showMap && (
+            <div
+              id="map-container"
+              className="mt-4 w-full h-64 rounded-lg overflow-hidden border border-yellow-400 shadow-md"
+            >
+              <iframe
+                title="Lokasi Peta"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.562921393636!2d124.89124777501974!3d-9.103519990960788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2cffbe68c14ee4ff%3A0xe1f486929a0e42bb!2sJl.%20Proklamasi%2C%20Berdao%2C%20Kec.%20Atambua%20Bar.%2C%20Kabupaten%20Belu%2C%20Nusa%20Tenggara%20Tim.!5e0!3m2!1sen!2sid!4v1749395446642!5m2!1sen!2sid"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          )}
         </div>
 
         {/* Contact Form */}
