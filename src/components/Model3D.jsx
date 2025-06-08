@@ -3,14 +3,33 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useAnimations, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
-// Ant Model with Animations (GLB)
 function AnimatedAnt({ onLoaded }) {
   const group = useRef();
-  const { scene, animations } = useGLTF("/assets/robot.glb");
+  const gltf = useGLTF("/assets/r-draco.glb");
+
+  const { animations, scene } = gltf;
   const { actions } = useAnimations(animations, group);
 
+  // Modifikasi material jadi sedikit metalic dan realistis
   useEffect(() => {
-    if (actions && Object.values(actions).length > 0) {
+    scene.traverse((child) => {
+      if (child.isMesh) {
+        // Pastikan material adalah MeshStandardMaterial atau ganti jadi itu
+        if (!(child.material instanceof THREE.MeshStandardMaterial)) {
+          child.material = new THREE.MeshStandardMaterial({
+            map: child.material.map || null,
+            color: child.material.color || new THREE.Color(0xffffff),
+          });
+        }
+        child.material.metalness = 0.5; // nilai antara 0 - 1, 0.5 cukup subtle
+        child.material.roughness = 0.1; // nilai antara 0 - 1, 0.3 untuk sedikit halus
+        child.material.needsUpdate = true;
+      }
+    });
+  }, [scene]);
+
+  useEffect(() => {
+    if (actions) {
       Object.values(actions).forEach((action) => {
         action.reset().fadeIn(1).play();
         action.setLoop(THREE.LoopRepeat, Infinity);
@@ -21,14 +40,16 @@ function AnimatedAnt({ onLoaded }) {
   }, [actions]);
 
   useEffect(() => {
-    if (onLoaded) onLoaded();
-  }, [onLoaded]);
+    if (gltf) {
+      onLoaded();
+    }
+  }, [gltf, onLoaded]);
 
   return (
     <primitive
       ref={group}
       object={scene}
-      scale={1.013}
+      scale={1.2}
       position={[0, 0, 0]}
       castShadow
       receiveShadow
@@ -36,7 +57,6 @@ function AnimatedAnt({ onLoaded }) {
   );
 }
 
-// Dynamic Light Animation
 function MovingLights() {
   const pointLightRef = useRef();
   const spotLightRef = useRef();
@@ -50,7 +70,6 @@ function MovingLights() {
         Math.cos(t) * 5
       );
     }
-
     if (spotLightRef.current) {
       spotLightRef.current.position.set(
         Math.sin(t * 0.5) * 2,
@@ -64,7 +83,7 @@ function MovingLights() {
     <>
       <pointLight
         ref={pointLightRef}
-        intensity={3}
+        intensity={1}
         distance={10}
         color="#00aaff"
         castShadow
@@ -85,10 +104,8 @@ function MovingLights() {
   );
 }
 
-// Main Canvas Component
 export default function Model3D() {
   const [loading, setLoading] = useState(true);
-
   const handleModelLoaded = () => setLoading(false);
 
   return (
@@ -111,16 +128,16 @@ export default function Model3D() {
         className="w-full h-full"
         style={{ visibility: loading ? "hidden" : "visible" }}
       >
-        <Canvas shadows camera={{ position: [5, 2, 5], fov: 45 }}>
-          <ambientLight intensity={0.5} />
+        <Canvas shadows camera={{ position: [2.5, 2, 8], fov: 45 }}>
+          <ambientLight intensity={1.2} />
           <directionalLight
             position={[1, 15, 7]}
-            intensity={0.8}
+            intensity={2.9}
             castShadow
             shadow-mapSize-width={1024}
             shadow-mapSize-height={1024}
           />
-          <pointLight position={[1, 1, 1]} intensity={0.5} />
+          <pointLight position={[1, 1, 1]} intensity={2} />
           <Suspense fallback={null}>
             <AnimatedAnt onLoaded={handleModelLoaded} />
             <MovingLights />
