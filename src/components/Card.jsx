@@ -226,22 +226,22 @@ export default function Portfolio() {
       details: [
         {
           image: homecb,
-          description: "Halaman detail dan sistem booking properti",
+          description: "Halaman web Stream Video",
           detailLink: "https://cinemaindo.cam/",
         },
         {
           image: dbImage,
-          description: "Halaman login & register user yang responsif",
+          description: "Website CoffeeShop",
           detailLink: "https://github.com/lafaek566/fullstack-BarberShop",
         },
         {
           image: cpHomeImage,
-          description: "Integrasi MySQL dengan backend Express.js",
+          description: "Real Estate",
           detailLink: "https://github.com/lafaek566/e-commerce",
         },
         {
           image: homeImage,
-          description: "Fitur pencarian dan filter properti real-time",
+          description: "Product Coffee Shop",
           detailLink: "https://github.com/lafaek566/Car",
         },
       ],
