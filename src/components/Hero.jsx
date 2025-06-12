@@ -42,7 +42,7 @@ const Hero = () => {
           data-aos="fade-right"
         >
           <h1 className="mt-0 md:mt-[-100px] text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white drop-shadow-lg">
-            Hy i'am <span className="text-orange-500">élv</span>
+            Hi saya <span className="text-orange-500">élv</span>
           </h1>
 
           <p className="text-base sm:text-lg text-gray-300">
