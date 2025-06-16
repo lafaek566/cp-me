@@ -300,7 +300,7 @@ export default function Portfolio() {
         },
         {
           image: dbImage,
-          description: "Product Coffee Shop",
+          description: "Barbershop",
           detailLink: "https://github.com/lafaek566/Car",
         },
       ],
