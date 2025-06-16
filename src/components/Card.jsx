@@ -16,7 +16,43 @@ import v2 from "../assets/v2.jpg";
 import v3 from "../assets/v3.jpg";
 import v4 from "../assets/v4.jpg";
 
-// Category Icon component with animation
+// Modal component
+const Modal = ({ isOpen, onClose, detail }) => {
+  if (!isOpen || !detail) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg max-w-md w-full p-6 relative">
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-xl"
+        >
+          ×
+        </button>
+        <img
+          src={detail.image}
+          alt="detail"
+          className="w-full h-52 object-cover rounded mb-4"
+        />
+        <p className="text-gray-800 dark:text-white text-sm">
+          {detail.description}
+        </p>
+        {detail.detailLink && (
+          <a
+            href={detail.detailLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-4 text-blue-600 dark:text-blue-400 hover:underline text-xs"
+          >
+            Buka link proyek
+          </a>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Icon kategori
 const getCategoryIcon = (category, isActive) => {
   const baseClasses = "w-6 h-6 transition-colors duration-300";
   switch (category) {
@@ -49,8 +85,8 @@ const getCategoryIcon = (category, isActive) => {
   }
 };
 
-// Detail Card component with hover zoom effect
-const DetailCard = ({ detail }) => (
+// Detail Card
+const DetailCard = ({ detail, onClick }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -58,9 +94,7 @@ const DetailCard = ({ detail }) => (
     transition={{ duration: 0.3 }}
     whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(0,0,0,0.2)" }}
     className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow p-3 text-xs text-gray-800 dark:text-white flex flex-col items-center cursor-pointer"
-    onClick={() =>
-      detail.detailLink && window.open(detail.detailLink, "_blank")
-    }
+    onClick={() => onClick(detail)}
     title="Klik untuk lihat detail proyek"
   >
     <img
@@ -73,7 +107,7 @@ const DetailCard = ({ detail }) => (
   </motion.div>
 );
 
-// Portfolio card with interactive hover, shadow, and scale
+// Portfolio Card
 const PortfolioCard = ({
   title,
   description,
@@ -85,6 +119,13 @@ const PortfolioCard = ({
   details = [],
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedDetail, setSelectedDetail] = useState(null);
+
+  const handleDetailClick = (detail) => {
+    setSelectedDetail(detail);
+    setModalOpen(true);
+  };
 
   return (
     <motion.div
@@ -95,7 +136,7 @@ const PortfolioCard = ({
       viewport={{ once: true }}
       className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto cursor-pointer"
     >
-      <div className=" w-full aspect-[4/3] overflow-hidden rounded-t-xl">
+      <div className="w-full aspect-[4/3] overflow-hidden rounded-t-xl">
         {image.includes("youtu") ? (
           <iframe
             width="100%"
@@ -124,7 +165,7 @@ const PortfolioCard = ({
           >
             {getCategoryIcon(category, isExpanded)}
           </motion.div>
-          <h3 className=" text-lg font-semibold text-gray-900 dark:text-white">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
             {title}
           </h3>
         </div>
@@ -172,11 +213,18 @@ const PortfolioCard = ({
 
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="mt-4 text-xs font-semibold text-blue-500 hover:underline focus:outline-none"
+          className={`mt-4 inline-flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-full transition duration-300 border border-blue-400 shadow-sm hover:shadow-md
+    ${
+      isExpanded
+        ? "bg-red-100 text-red-600 hover:bg-red-200"
+        : "bg-blue-100 text-blue-600 hover:bg-blue-200"
+    }`}
           aria-expanded={isExpanded}
           aria-controls="details-section"
         >
-          {isExpanded ? "Sembunyikan Detail" : "Lihat Detail"}
+          <span className="relative inline-block after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:w-0 after:h-0.5 after:bg-current after:transition-all after:duration-300 hover:after:w-full">
+            👁️ {isExpanded ? "Sembunyikan Detail" : "Lihat Detail"}
+          </span>
         </button>
 
         <AnimatePresence>
@@ -190,17 +238,28 @@ const PortfolioCard = ({
               transition={{ duration: 0.3 }}
             >
               {details.map((detail, idx) => (
-                <DetailCard key={idx} detail={detail} />
+                <DetailCard
+                  key={idx}
+                  detail={detail}
+                  onClick={handleDetailClick}
+                />
               ))}
             </motion.div>
           )}
         </AnimatePresence>
       </div>
+
+      {/* Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        detail={selectedDetail}
+      />
     </motion.div>
   );
 };
 
-// Main Portfolio component
+// Main Component
 export default function Portfolio() {
   const projects = [
     {
@@ -230,17 +289,17 @@ export default function Portfolio() {
           detailLink: "https://cinemaindo.cam/",
         },
         {
-          image: dbImage,
+          image: homeImage,
           description: "Website CoffeeShop",
-          detailLink: "https://github.com/lafaek566/fullstack-BarberShop",
+          detailLink: "https://coffe-shop-ebon.vercel.app/",
         },
         {
           image: cpHomeImage,
           description: "Real Estate",
-          detailLink: "https://github.com/lafaek566/e-commerce",
+          detailLink: "https://real-estate-web.pages.dev/",
         },
         {
-          image: homeImage,
+          image: dbImage,
           description: "Product Coffee Shop",
           detailLink: "https://github.com/lafaek566/Car",
         },

@@ -1,5 +1,5 @@
 import React from "react";
-import PortfolioCard from "./Card";
+import PortfolioCard from "../components/Card";
 
 export default function Portfolio() {
   const projects = [
