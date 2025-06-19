@@ -45,10 +45,19 @@ const Hero = () => {
             Hi saya <span className="text-orange-500">élv</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-gray-300">
-            Ayo Join!, website interaktif, design UX, video editing hingga
-            animasi 3D.
+          <p className="text-sm sm:text-base text-gray-300 leading-relaxed max-w-3xl mx-auto text-justify">
+            Welcome! Saya adalah{" "}
+            <span className="text-white font-semibold">
+              Full Stack Developer
+            </span>{" "}
+            dan{" "}
+            <span className="text-white font-semibold">Desainer Kreatif</span>{" "}
+            yang memadukan logika dan estetika. Mulai dari membangun website
+            interaktif, merancang antarmuka UX yang intuitif, mengedit video
+            promosi, hingga menciptakan animasi 3D—semuanya saya kerjakan dengan
+            detail dan dedikasi. Berikut adalah karya-karya terbaik saya.
           </p>
+
           <Link
             to="portfolio"
             smooth={true}
@@ -91,7 +100,7 @@ const Hero = () => {
                   <Typewriter
                     options={{
                       strings: [
-                        "Hi.. apa yang bisa èlv bantu?",
+                        "Hi.. apa yang bisa saya bantu?",
                         "Mau cari properti?",
                         "Atau ingin konsultasi?",
                       ],

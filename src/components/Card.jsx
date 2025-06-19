@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code2, Paintbrush2, Clapperboard } from "lucide-react";
+import { Code2, Paintbrush2 } from "lucide-react";
 
-// Images import
+// Gambar aset
 import dbImage from "../assets/db.jpg";
 import cpHomeImage from "../assets/cp home.jpg";
 import homeImage from "../assets/home.jpg";
@@ -16,10 +16,9 @@ import v2 from "../assets/v2.jpg";
 import v3 from "../assets/v3.jpg";
 import v4 from "../assets/v4.jpg";
 
-// Modal component
+// Modal
 const Modal = ({ isOpen, onClose, detail }) => {
   if (!isOpen || !detail) return null;
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg max-w-md w-full p-6 relative">
@@ -52,32 +51,19 @@ const Modal = ({ isOpen, onClose, detail }) => {
   );
 };
 
-// Icon kategori
 const getCategoryIcon = (category, isActive) => {
-  const baseClasses = "w-6 h-6 transition-colors duration-300";
+  const base = "w-6 h-6 transition-colors duration-300";
   switch (category) {
     case "Programming":
       return (
         <Code2
-          className={`${baseClasses} ${
-            isActive ? "text-blue-600" : "text-blue-400"
-          }`}
+          className={`${base} ${isActive ? "text-blue-600" : "text-blue-400"}`}
         />
       );
-    case "Design Grafis":
+    case "Creative Media":
       return (
         <Paintbrush2
-          className={`${baseClasses} ${
-            isActive ? "text-pink-600" : "text-pink-400"
-          }`}
-        />
-      );
-    case "Video Maker":
-      return (
-        <Clapperboard
-          className={`${baseClasses} ${
-            isActive ? "text-yellow-600" : "text-yellow-400"
-          }`}
+          className={`${base} ${isActive ? "text-pink-600" : "text-pink-400"}`}
         />
       );
     default:
@@ -85,15 +71,14 @@ const getCategoryIcon = (category, isActive) => {
   }
 };
 
-// Detail Card
 const DetailCard = ({ detail, onClick }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: 20 }}
     transition={{ duration: 0.3 }}
-    whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(0,0,0,0.2)" }}
-    className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow p-3 text-xs text-gray-800 dark:text-white flex flex-col items-center cursor-pointer"
+    whileHover={{ scale: 1.05 }}
+    className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow p-3 text-xs text-gray-800 dark:text-white flex flex-col items-center cursor-pointer transition"
     onClick={() => onClick(detail)}
     title="Klik untuk lihat detail proyek"
   >
@@ -107,7 +92,6 @@ const DetailCard = ({ detail, onClick }) => (
   </motion.div>
 );
 
-// Portfolio Card
 const PortfolioCard = ({
   title,
   description,
@@ -117,6 +101,7 @@ const PortfolioCard = ({
   codeLink,
   category,
   details = [],
+  highlighted = false,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -131,41 +116,39 @@ const PortfolioCard = ({
     <motion.div
       initial={{ opacity: 0, y: 40, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      whileHover={{ scale: 1.03, boxShadow: "0 15px 30px rgba(0,0,0,0.2)" }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      whileHover={{
+        scale: highlighted ? 1.03 : 1.01,
+        boxShadow: "0 15px 30px rgba(0,0,0,0.2)",
+      }}
+      transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto cursor-pointer"
+      className={`w-full max-w-full sm:max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden mx-auto cursor-pointer transition-all duration-300 ${
+        highlighted ? "ring-4 ring-blue-400 scale-[1.01]" : ""
+      }`}
     >
       <div className="w-full aspect-[4/3] overflow-hidden rounded-t-xl">
-        {image.includes("youtu") ? (
-          <iframe
-            width="100%"
-            height="100%"
-            src={`https://www.youtube.com/embed/${image.split("/").pop()}`}
-            title={title}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-          />
-        )}
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+        />
       </div>
 
       <div className="p-5 space-y-3">
         <div className="flex items-center gap-3">
           <motion.div
             animate={{ rotate: isExpanded ? 360 : 0 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
+            transition={{ duration: 0.8 }}
           >
             {getCategoryIcon(category, isExpanded)}
           </motion.div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <h3
+            className={`text-lg font-semibold ${
+              highlighted
+                ? "text-blue-600 dark:text-blue-400 animate-pulse"
+                : "text-gray-900 dark:text-white"
+            }`}
+          >
             {title}
           </h3>
         </div>
@@ -179,7 +162,7 @@ const PortfolioCard = ({
             <motion.span
               key={idx}
               whileHover={{ scale: 1.1 }}
-              className="bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-100 text-xs px-3 py-1 rounded-full cursor-default select-none"
+              className="bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-100 text-xs px-3 py-1 rounded-full"
             >
               {tag}
             </motion.span>
@@ -213,24 +196,18 @@ const PortfolioCard = ({
 
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`mt-4 inline-flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-full transition duration-300 border border-blue-400 shadow-sm hover:shadow-md
-    ${
-      isExpanded
-        ? "bg-red-100 text-red-600 hover:bg-red-200"
-        : "bg-blue-100 text-blue-600 hover:bg-blue-200"
-    }`}
-          aria-expanded={isExpanded}
-          aria-controls="details-section"
+          className={`mt-4 inline-flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-full transition duration-300 border border-blue-400 shadow-sm hover:shadow-md ${
+            isExpanded
+              ? "bg-red-100 text-red-600 hover:bg-red-200"
+              : "bg-blue-100 text-blue-600 hover:bg-blue-200"
+          }`}
         >
-          <span className="relative inline-block after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:w-0 after:h-0.5 after:bg-current after:transition-all after:duration-300 hover:after:w-full">
-            👁️ {isExpanded ? "Sembunyikan Detail" : "Lihat Detail"}
-          </span>
+          👁️ {isExpanded ? "Sembunyikan Detail" : "Lihat Detail"}
         </button>
 
         <AnimatePresence>
           {isExpanded && (
             <motion.div
-              id="details-section"
               className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -249,7 +226,6 @@ const PortfolioCard = ({
         </AnimatePresence>
       </div>
 
-      {/* Modal */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
@@ -259,7 +235,6 @@ const PortfolioCard = ({
   );
 };
 
-// Main Component
 export default function Portfolio() {
   const projects = [
     {
@@ -269,15 +244,12 @@ export default function Portfolio() {
         "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
       tags: [
         "JavaScript",
-        "Java",
         "React",
         "Node.js",
-        "Express.js",
+        "Express",
         "PHP",
         "Python",
         "MySQL",
-        "PostgreSQL",
-        "SQL Server",
       ],
       demoLink: null,
       codeLink: "https://github.com/lafaek566",
@@ -306,56 +278,22 @@ export default function Portfolio() {
       ],
     },
     {
-      title: "Designer",
-      description: "Poster digital Project",
-      image:
-        "https://i.pinimg.com/736x/4b/b7/f8/4bb7f81def271b7e9cefafdc81687728.jpg",
-      tags: [
-        "Illustrator",
-        "Graphic Design",
-        "Poster",
-        "UX",
-        "Canva",
-        "Adobe Photoshop",
-        "Corel Draw",
-        "Blender",
-      ],
-      demoLink: null,
-      codeLink: null,
-      category: "Design Grafis",
-      details: [
-        {
-          image: db1,
-          description: "Menggunakan Adobe Illustrator",
-          detailLink: db1,
-        },
-        {
-          image: db2,
-          description: "Pemilihan warna yang menarik perhatian",
-          detailLink: db2,
-        },
-        {
-          image: db3,
-          description: "Desain tipografi yang kuat dan konsisten",
-          detailLink: db3,
-        },
-        {
-          image: db4,
-          description: "Komposisi poster yang seimbang & profesional",
-          detailLink: db4,
-        },
-      ],
-    },
-    {
-      title: "Video Promosi Produk",
+      title: "Creative Media Projects",
       description:
-        "Video pendek 30 detik untuk promosi produk di TikTok, Instagram, YouTube, dan Facebook",
+        "Desain grafis & video promosi kreatif untuk media sosial & branding.",
       image:
         "https://i.pinimg.com/736x/d9/5b/69/d95b69ff6e716b718d68759b0c4c82a1.jpg",
-      tags: ["Adobe Premiere", "After Effects", "Canva", "Filmora"],
+      tags: [
+        "Adobe Premiere",
+        "After Effects",
+        "Illustrator",
+        "Photoshop",
+        "Filmora",
+        "Canva",
+      ],
       demoLink: null,
       codeLink: null,
-      category: "Video Maker",
+      category: "Creative Media",
       details: [
         {
           image: v1,
@@ -381,6 +319,18 @@ export default function Portfolio() {
           detailLink:
             "https://www.tiktok.com/@suarasoares/video/7455885733253991698",
         },
+        {
+          image: db1,
+          description: "Poster: Adobe Illustrator",
+          detailLink: db1,
+        },
+        { image: db2, description: "Warna menarik perhatian", detailLink: db2 },
+        { image: db3, description: "Tipografi konsisten", detailLink: db3 },
+        {
+          image: db4,
+          description: "Komposisi poster profesional",
+          detailLink: db4,
+        },
       ],
     },
   ];
@@ -393,10 +343,13 @@ export default function Portfolio() {
       <h2 className="text-4xl font-bold text-center text-gray-900 dark:text-white mb-8">
         Pekerjaan
       </h2>
-
-      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
         {projects.map((project, index) => (
-          <PortfolioCard key={index} {...project} />
+          <PortfolioCard
+            key={index}
+            {...project}
+            highlighted={project.title === "Full Stack Developer"}
+          />
         ))}
       </div>
     </section>

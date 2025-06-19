@@ -68,30 +68,42 @@ const About = () => {
       </motion.h2>
 
       <motion.p
-        className="text-center text-gray-300 mb-10 max-w-3xl px-4"
+        className="text-center text-gray-300 mb-10 max-w-3xl px-4 text-sm sm:text-base leading-relaxed"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.3 }}
         viewport={{ once: true }}
       >
-        èlv Service mengedepankan kreativitas dan dedikasi untuk memberikan
-        solusi digital terbaik. Dengan keahlian di bidang pemrograman, desain,
-        dan videografi, kami siap mewujudkan ide Anda menjadi kenyataan.
+        Saya mengedepankan kreativitas dan dedikasi dalam setiap proyek digital
+        yang saya kerjakan. Dengan keahlian di bidang pemrograman, desain, dan
+        videografi, saya berkomitmen untuk mewujudkan ide Anda menjadi solusi
+        digital yang efektif dan menarik.
       </motion.p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">
         {roles.map((role, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
-            viewport={{ once: true }}
-            className={`rounded-2xl p-6 flex flex-col text-white border backdrop-blur-md transition-all hover:scale-105 hover:shadow-xl ${
+            className={`rounded-2xl p-6 flex flex-col text-white border backdrop-blur-md ${
               index === 2
                 ? "bg-orange-900/20 border-orange-500"
                 : "bg-white/5 border-gray-700"
             }`}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{
+              scale: 1.035,
+              boxShadow: "0px 8px 20px rgba(255,255,255,0.15)",
+            }}
+            whileTap={{ scale: 0.98 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 18,
+              duration: 0.4,
+              delay: index * 0.1,
+            }}
+            viewport={{ once: true }}
           >
             <div className="flex justify-center mb-4">{role.icon}</div>
             <h3 className="text-xl font-semibold text-center mb-2">
@@ -103,7 +115,7 @@ const About = () => {
 
             <button
               onClick={() => toggleItem(index)}
-              className="flex items-center justify-center text-sm text-orange-400 hover:text-orange-300 hover:underline transition mb-2"
+              className="flex items-center justify-center text-sm text-orange-400 hover:text-orange-300 hover:underline mb-2 transition"
               aria-expanded={openIndex === index}
               aria-controls={`details-${index}`}
             >
@@ -118,15 +130,15 @@ const About = () => {
               )}
             </button>
 
-            <AnimatePresence>
+            <AnimatePresence initial={false}>
               {openIndex === index && (
                 <motion.ul
                   id={`details-${index}`}
-                  className="text-gray-200 text-sm mt-2 pl-1 pr-2 space-y-2 overflow-hidden"
+                  className="text-gray-200 text-sm mt-2 space-y-2 overflow-hidden"
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.4 }}
+                  transition={{ duration: 0.35, ease: "easeInOut" }}
                 >
                   {role.details.map((detail, i) => (
                     <li key={i} className="flex items-start gap-2">
