@@ -62,7 +62,7 @@ const Contact = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="w-full max-w-5xl bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl p-6 sm:p-10 flex flex-col md:flex-row items-start gap-4"
+        className="w-200 max-w-2xl bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl p-6 sm:p-10 flex flex-col md:flex-row items-start gap-4"
       >
         {/* Contact Info */}
         <div className="md:w-1/2 w-full flex flex-col gap-6 items-center">
