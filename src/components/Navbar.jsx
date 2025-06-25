@@ -16,7 +16,7 @@ const Navbar = () => {
             className="cursor-pointer flex items-center space-x-2"
           >
             <img src={logo} alt="Logo" className="w-10 h-10 rounded-full" />
-            <span className="text-small font-bold text-white">élv service</span>
+            <span className="text-small font-bold text-white">élv</span>
           </Link>
         </div>
 

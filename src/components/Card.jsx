@@ -1,22 +1,40 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Code2, Paintbrush2 } from "lucide-react";
+import {
+  FaReact,
+  FaNodeJs,
+  FaPhp,
+  FaPython,
+  FaFilm,
+  FaVideo,
+} from "react-icons/fa";
+import {
+  SiMysql,
+  SiAdobeaftereffects,
+  SiAdobeillustrator,
+  SiJavascript,
+  SiCanva,
+} from "react-icons/si";
+import projects from "../data/projectData";
 
-// Gambar aset
-import dbImage from "../assets/db.jpg";
-import cpHomeImage from "../assets/cp home.jpg";
-import homeImage from "../assets/home.jpg";
-import homecb from "../assets/cb.jpg";
-import db1 from "../assets/1.png";
-import db2 from "../assets/2.png";
-import db3 from "../assets/3.png";
-import db4 from "../assets/4.png";
-import v1 from "../assets/v1.jpg";
-import v2 from "../assets/v2.jpg";
-import v3 from "../assets/v3.jpg";
-import v4 from "../assets/v4.jpg";
+const tagIconMap = {
+  JavaScript: <SiJavascript className="text-yellow-400" />,
+  React: <FaReact className="text-cyan-400" />,
+  "Node.js": <FaNodeJs className="text-green-500" />,
+  Express: <FaNodeJs className="text-gray-300" />,
+  PHP: <FaPhp className="text-indigo-400" />,
+  Python: <FaPython className="text-blue-400" />,
+  MySQL: <SiMysql className="text-blue-500" />,
+  Photoshop: <FaVideo className="text-blue-400" />,
+  Illustrator: <SiAdobeillustrator className="text-orange-400" />,
+  Filmora: <FaFilm className="text-red-400" />,
+  Canva: <SiCanva className="text-blue-300" />,
+  "Adobe Premiere": <FaVideo className="text-pink-400" />,
+  "After Effects": <SiAdobeaftereffects className="text-purple-400" />,
+  TikTok: <FaVideo className="text-black" />,
+};
 
-// Modal
 const Modal = ({ isOpen, onClose, detail }) => {
   if (!isOpen || !detail) return null;
   return (
@@ -33,7 +51,7 @@ const Modal = ({ isOpen, onClose, detail }) => {
           alt="detail"
           className="w-full h-52 object-cover rounded mb-4"
         />
-        <p className="text-gray-800 dark:text-white text-sm">
+        <p className="text-gray-800 dark:text-white text-sm whitespace-pre-line">
           {detail.description}
         </p>
         {detail.detailLink && (
@@ -101,17 +119,13 @@ const PortfolioCard = ({
   codeLink,
   category,
   details = [],
+  status,
+  location,
   highlighted = false,
+  isExpanded,
+  onToggle,
+  onDetailClick,
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedDetail, setSelectedDetail] = useState(null);
-
-  const handleDetailClick = (detail) => {
-    setSelectedDetail(detail);
-    setModalOpen(true);
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 40, scale: 0.95 }}
@@ -122,11 +136,11 @@ const PortfolioCard = ({
       }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className={`w-full max-w-full sm:max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden mx-auto cursor-pointer transition-all duration-300 ${
+      className={`w-full max-w-full sm:max-w-lg bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden mx-auto cursor-pointer transition-all duration-300 ${
         highlighted ? "ring-4 ring-blue-400 scale-[1.01]" : ""
       }`}
     >
-      <div className="w-full aspect-[4/3] overflow-hidden rounded-t-xl">
+      <div className="w-full h-52 sm:h-64 md:h-72 lg:h-80 xl:h-80 2xl:h-96 overflow-hidden rounded-t-xl">
         <img
           src={image}
           alt={title}
@@ -153,19 +167,39 @@ const PortfolioCard = ({
           </h3>
         </div>
 
-        <p className="text-gray-600 dark:text-gray-300 text-sm">
+        <p className="text-gray-600 dark:text-gray-300 text-sm whitespace-pre-line">
           {description}
         </p>
 
+        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+          <span>📍 {location || "Indonesia"}</span>
+        </div>
+
+        {status && (
+          <span
+            className={`inline-block mt-2 px-3 py-1 rounded-full text-xs font-medium ${
+              status === "Completed"
+                ? "bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-100"
+                : status === "Ongoing"
+                ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-800 dark:text-yellow-100"
+                : "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-white"
+            }`}
+          >
+            {status}
+          </span>
+        )}
+
         <div className="flex flex-wrap gap-2">
           {tags.map((tag, idx) => (
-            <motion.span
+            <motion.div
               key={idx}
-              whileHover={{ scale: 1.1 }}
-              className="bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-100 text-xs px-3 py-1 rounded-full"
+              whileHover={{ scale: 1.15 }}
+              className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white px-3 py-1 text-xs rounded-full shadow-sm"
+              title={tag}
             >
-              {tag}
-            </motion.span>
+              {tagIconMap[tag] || <Code2 className="text-gray-400" />}
+              <span className="hidden sm:inline">{tag}</span>
+            </motion.div>
           ))}
         </div>
 
@@ -195,7 +229,7 @@ const PortfolioCard = ({
         </div>
 
         <button
-          onClick={() => setIsExpanded(!isExpanded)}
+          onClick={onToggle}
           className={`mt-4 inline-flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-full transition duration-300 border border-blue-400 shadow-sm hover:shadow-md ${
             isExpanded
               ? "bg-red-100 text-red-600 hover:bg-red-200"
@@ -215,15 +249,64 @@ const PortfolioCard = ({
               transition={{ duration: 0.3 }}
             >
               {details.map((detail, idx) => (
-                <DetailCard
-                  key={idx}
-                  detail={detail}
-                  onClick={handleDetailClick}
-                />
+                <DetailCard key={idx} detail={detail} onClick={onDetailClick} />
               ))}
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
+    </motion.div>
+  );
+};
+
+export default function Portfolio() {
+  const [expandedIndex, setExpandedIndex] = useState(null);
+  const [selectedDetail, setSelectedDetail] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleToggle = (index) => {
+    setExpandedIndex((prev) => (prev === index ? null : index));
+  };
+
+  const handleDetailClick = (detail) => {
+    setSelectedDetail(detail);
+    setModalOpen(true);
+  };
+
+  return (
+    <section
+      id="portfolio"
+      className="bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8"
+    >
+      <div className="max-w-screen-2xl mx-auto">
+        <motion.h2
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-3xl sm:text-4xl font-bold text-center text-gray-900 dark:text-white mb-10"
+        >
+          Proyek & Portofolio
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-7xl grid place-items-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8"
+        >
+          {projects.map((project, index) => (
+            <PortfolioCard
+              key={index}
+              {...project}
+              isExpanded={expandedIndex === index}
+              onToggle={() => handleToggle(index)}
+              onDetailClick={handleDetailClick}
+              highlighted={project.title === "Full Stack Developer"}
+            />
+          ))}
+        </motion.div>
       </div>
 
       <Modal
@@ -231,127 +314,6 @@ const PortfolioCard = ({
         onClose={() => setModalOpen(false)}
         detail={selectedDetail}
       />
-    </motion.div>
-  );
-};
-
-export default function Portfolio() {
-  const projects = [
-    {
-      title: "Full Stack Developer",
-      description: "Sistem pemesanan Sesuai Keinginanmu.",
-      image:
-        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
-      tags: [
-        "JavaScript",
-        "React",
-        "Node.js",
-        "Express",
-        "PHP",
-        "Python",
-        "MySQL",
-      ],
-      demoLink: null,
-      codeLink: "https://github.com/lafaek566",
-      category: "Programming",
-      details: [
-        {
-          image: homecb,
-          description: "Halaman web Stream Video",
-          detailLink: "https://cinemaindo.cam/",
-        },
-        {
-          image: homeImage,
-          description: "Website CoffeeShop",
-          detailLink: "https://coffe-shop-ebon.vercel.app/",
-        },
-        {
-          image: cpHomeImage,
-          description: "Real Estate",
-          detailLink: "https://real-estate-web.pages.dev/",
-        },
-        {
-          image: dbImage,
-          description: "Barbershop",
-          detailLink: "https://github.com/lafaek566/Car",
-        },
-      ],
-    },
-    {
-      title: "Creative Media Projects",
-      description:
-        "Desain grafis & video promosi kreatif untuk media sosial & branding.",
-      image:
-        "https://i.pinimg.com/736x/d9/5b/69/d95b69ff6e716b718d68759b0c4c82a1.jpg",
-      tags: [
-        "Adobe Premiere",
-        "After Effects",
-        "Illustrator",
-        "Photoshop",
-        "Filmora",
-        "Canva",
-      ],
-      demoLink: null,
-      codeLink: null,
-      category: "Creative Media",
-      details: [
-        {
-          image: v1,
-          description: "Editing video dengan transisi halus",
-          detailLink:
-            "https://www.tiktok.com/@suarasoares/video/7505358372309437714",
-        },
-        {
-          image: v2,
-          description: "Fokus produk kosmetik & pencahayaan",
-          detailLink:
-            "https://www.tiktok.com/@suarasoares/video/7501663490139049224",
-        },
-        {
-          image: v3,
-          description: "Durasi efektif untuk kampanye sosial media",
-          detailLink:
-            "https://www.tiktok.com/@suarasoares/video/7461220448685100306",
-        },
-        {
-          image: v4,
-          description: "Musik latar yang mendukung visual promosi",
-          detailLink:
-            "https://www.tiktok.com/@suarasoares/video/7455885733253991698",
-        },
-        {
-          image: db1,
-          description: "Poster: Adobe Illustrator",
-          detailLink: db1,
-        },
-        { image: db2, description: "Warna menarik perhatian", detailLink: db2 },
-        { image: db3, description: "Tipografi konsisten", detailLink: db3 },
-        {
-          image: db4,
-          description: "Komposisi poster profesional",
-          detailLink: db4,
-        },
-      ],
-    },
-  ];
-
-  return (
-    <section
-      id="portfolio"
-      className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-6 sm:px-10 md:px-20 lg:px-32 xl:px-48"
-    >
-      <h2 className="text-4xl font-bold text-center text-gray-900 dark:text-white mb-8">
-        Pekerjaan
-      </h2>
-      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-        {projects.map((project, index) => (
-          <PortfolioCard
-            key={index}
-            {...project}
-            highlighted={project.title === "Full Stack Developer"}
-          />
-        ))}
-      </div>
     </section>
   );
 }

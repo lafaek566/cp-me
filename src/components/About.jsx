@@ -5,12 +5,6 @@ import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { BsCheckCircleFill } from "react-icons/bs";
 
 const About = () => {
-  const [openIndex, setOpenIndex] = useState(null);
-
-  const toggleItem = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   const roles = [
     {
       title: "Programmer Fullstack",
@@ -52,10 +46,18 @@ const About = () => {
     },
   ];
 
+  const [openStates, setOpenStates] = useState(Array(roles.length).fill(false));
+
+  const toggleItem = (index) => {
+    setOpenStates((prev) =>
+      prev.map((isOpen, i) => (i === index ? !isOpen : isOpen))
+    );
+  };
+
   return (
     <section
       id="about"
-      className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black px-4 py-16 flex flex-col items-center"
+      className="scroll-mt-24 bg-gradient-to-br from-black via-gray-900 to-black px-4 pt-16 pb-10 flex flex-col items-center"
     >
       <motion.h2
         className="text-4xl sm:text-5xl font-bold text-white mb-6 text-center"
@@ -80,11 +82,11 @@ const About = () => {
         digital yang efektif dan menarik.
       </motion.p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full">
         {roles.map((role, index) => (
           <motion.div
             key={index}
-            className={`rounded-2xl p-6 flex flex-col text-white border backdrop-blur-md ${
+            className={`rounded-2xl p-6 flex flex-col text-white border backdrop-blur-md transition-all duration-300 ${
               index === 2
                 ? "bg-orange-900/20 border-orange-500"
                 : "bg-white/5 border-gray-700"
@@ -109,17 +111,17 @@ const About = () => {
             <h3 className="text-xl font-semibold text-center mb-2">
               {role.title}
             </h3>
-            <p className="text-gray-300 text-sm text-center mb-4">
+            <p className="text-gray-300 text-sm text-center mb-3">
               {role.description}
             </p>
 
             <button
               onClick={() => toggleItem(index)}
               className="flex items-center justify-center text-sm text-orange-400 hover:text-orange-300 hover:underline mb-2 transition"
-              aria-expanded={openIndex === index}
+              aria-expanded={openStates[index]}
               aria-controls={`details-${index}`}
             >
-              {openIndex === index ? (
+              {openStates[index] ? (
                 <>
                   Tutup Detail <FiChevronUp className="ml-1" />
                 </>
@@ -131,7 +133,7 @@ const About = () => {
             </button>
 
             <AnimatePresence initial={false}>
-              {openIndex === index && (
+              {openStates[index] && (
                 <motion.ul
                   id={`details-${index}`}
                   className="text-gray-200 text-sm mt-2 space-y-2 overflow-hidden"

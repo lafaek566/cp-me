@@ -62,7 +62,7 @@ const Contact = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="w-full max-w-5xl bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl p-6 sm:p-10 flex flex-col md:flex-row items-start gap-10"
+        className="w-full max-w-5xl bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl p-6 sm:p-10 flex flex-col md:flex-row items-start gap-4"
       >
         {/* Contact Info */}
         <div className="md:w-1/2 w-full flex flex-col gap-6 items-center">
@@ -83,7 +83,7 @@ const Contact = () => {
               },
               {
                 icon: <MapPin size={28} />,
-                link: "https://www.google.com/maps?q=Jl.+Proklamasi,+NTT,+Indonesia",
+                link: "https://www.google.com/maps/place/Grogol+petamburan,+West+Jakarta+City,+Jakarta/@-6.1639651,106.7659609,14z/data=!3m1!4b1!4m6!3m5!1s0x2e69f64443e58dcb:0x1cdeacf61286820a!8m2!3d-6.161698!4d106.7846412!16zL20vMGdjNHk1?entry=ttu&g_ep=EgoyMDI1MDYyMi4wIKXMDSoASAFQAw%3D%3D",
                 color: "yellow",
               },
             ].map(({ icon, link, color }, i) => (
@@ -117,12 +117,13 @@ const Contact = () => {
             >
               <iframe
                 title="Lokasi Peta"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.562921393636!2d124.89124777501974!3d-9.103519990960788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2cffbe68c14ee4ff%3A0xe1f486929a0e42bb!2sJl.%20Proklamasi%2C%20Berdao%2C%20Kec.%20Atambua%20Bar.%2C%20Kabupaten%20Belu%2C%20Nusa%20Tenggara%20Tim.!5e0!3m2!1sen!2sid!4v1749395446642!5m2!1sen!2sid"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.5859909116357!2d106.77003577500994!3d-6.200425460687334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f64443e58dcb%3A0x1cdeacf61286820a!2sGrogol%20petamburan%2C%20West%20Jakarta%20City%2C%20Jakarta!5e0!3m2!1sen!2sid!4v1719400000000!5m2!1sen!2sid"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen=""
                 loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
               />
             </motion.div>
           )}
@@ -143,7 +144,7 @@ const Contact = () => {
               label: "Nama",
               type: "text",
               icon: <User size={18} />,
-              placeholder: "Nama lengkap",
+              placeholder: "nama",
               value: form.name,
               error: errors.name,
             },

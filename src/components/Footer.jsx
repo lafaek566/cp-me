@@ -7,11 +7,11 @@ const Footer = () => {
         {/* About Section */}
         <div className="max-w-full md:max-w-sm text-center md:text-left">
           <h2 className="text-lg md:text-xl font-semibold mb-1 text-white">
-            Śervice's
+            Pelayanan
           </h2>
           <p className="text-gray-400 leading-relaxed text-xs md:text-sm max-w-xs mx-auto md:mx-0">
-            èlv Service memberikan solusi teknologi terbaik dengan kualitas,
-            inovasi, dan kepuasan klien sebagai prioritas utama.
+            memberikan solusi teknologi terbaik dengan kualitas, inovasi, dan
+            kepuasan klien sebagai prioritas utama.
           </p>
         </div>
 
@@ -21,7 +21,7 @@ const Footer = () => {
             Alamat
           </h2>
           <address className="not-italic text-gray-400 text-xs md:text-sm max-w-xs mx-auto md:mx-0 leading-snug">
-            jl.Proklmasi, Kota Atambua 85711
+            Grogol, Jakarta Barat
             <br />
             indonesia
             <br />

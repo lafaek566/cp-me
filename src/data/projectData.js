@@ -1,4 +1,3 @@
-// src/data/projectsData.js
 import dbImage from "../assets/db.jpg";
 import cpHomeImage from "../assets/cp home.jpg";
 import homeImage from "../assets/home.jpg";
@@ -12,23 +11,20 @@ import v2 from "../assets/v2.jpg";
 import v3 from "../assets/v3.jpg";
 import v4 from "../assets/v4.jpg";
 
-export const projects = [
+const projects = [
   {
     title: "Full Stack Developer",
     description: "Sistem pemesanan Sesuai Keinginanmu.",
     image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+      "https://i.pinimg.com/736x/4b/c8/a1/4bc8a1873b16f428b6c209a09bdd9165.jpg",
     tags: [
       "JavaScript",
-      "Java",
       "React",
       "Node.js",
-      "Express.js",
+      "Express",
       "PHP",
       "Python",
       "MySQL",
-      "PostgreSQL",
-      "SQL Server",
     ],
     demoLink: null,
     codeLink: "https://github.com/lafaek566",
@@ -40,73 +36,64 @@ export const projects = [
         detailLink: "https://cinemaindo.cam/",
       },
       {
-        image: dbImage,
+        image: homeImage,
         description: "Website CoffeeShop",
-        detailLink: "https://github.com/lafaek566/fullstack-BarberShop",
+        detailLink: "https://coffe-shop-ebon.vercel.app/",
       },
       {
         image: cpHomeImage,
         description: "Real Estate",
-        detailLink: "https://github.com/lafaek566/e-commerce",
+        detailLink: "https://real-estate-web.pages.dev/",
       },
       {
-        image: homeImage,
-        description: "Product Coffee Shop",
+        image: dbImage,
+        description: "Barbershop",
         detailLink: "https://github.com/lafaek566/Car",
       },
     ],
   },
   {
-    title: "Designer",
-    description: "Poster digital Project",
+    title: "Creative Media Projects",
+    description:
+      "Desain grafis & video promosi kreatif untuk media sosial & branding.",
     image:
-      "https://i.pinimg.com/736x/4b/b7/f8/4bb7f81def271b7e9cefafdc81687728.jpg",
+      "https://i.pinimg.com/736x/43/27/5c/43275c006aa1da7dfaeb0d9957e1d892.jpg",
     tags: [
+      "Adobe Premiere",
+      "After Effects",
       "Illustrator",
-      "Graphic Design",
-      "Poster",
-      "UX",
+      "Photoshop",
+      "Filmora",
       "Canva",
-      "Adobe Photoshop",
-      "Corel Draw",
-      "Blender",
     ],
     demoLink: null,
     codeLink: null,
-    category: "Design Grafis",
+    category: "Creative Media",
     details: [
       {
         image: db1,
-        description: "Menggunakan Adobe Illustrator",
+        description: "Poster: Adobe Illustrator",
         detailLink: db1,
       },
-      {
-        image: db2,
-        description: "Pemilihan warna yang menarik perhatian",
-        detailLink: db2,
-      },
-      {
-        image: db3,
-        description: "Desain tipografi yang kuat dan konsisten",
-        detailLink: db3,
-      },
+      { image: db2, description: "Warna menarik perhatian", detailLink: db2 },
+      { image: db3, description: "Tipografi konsisten", detailLink: db3 },
       {
         image: db4,
-        description: "Komposisi poster yang seimbang & profesional",
+        description: "Komposisi poster profesional",
         detailLink: db4,
       },
     ],
   },
   {
-    title: "Video Promosi Produk",
+    title: "Video Editing Projects",
     description:
-      "Video pendek 30 detik untuk promosi produk di TikTok, Instagram, YouTube, dan Facebook",
+      "Contoh hasil editing video untuk keperluan promosi, branding, dan sosial media.",
     image:
-      "https://i.pinimg.com/736x/d9/5b/69/d95b69ff6e716b718d68759b0c4c82a1.jpg",
-    tags: ["Adobe Premiere", "After Effects", "Canva", "Filmora"],
+      "https://i.pinimg.com/736x/59/2a/a3/592aa3485b737bb07f0a52c09232dcbd.jpg",
+    tags: ["TikTok", "Video Editing", "After Effects", "Adobe Premiere"],
     demoLink: null,
     codeLink: null,
-    category: "Video Maker",
+    category: "Creative Media",
     details: [
       {
         image: v1,
@@ -135,3 +122,5 @@ export const projects = [
     ],
   },
 ];
+
+export default projects;
