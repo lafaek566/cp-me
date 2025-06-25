@@ -57,7 +57,7 @@ const projects = [
     description:
       "Desain grafis & video promosi kreatif untuk media sosial & branding.",
     image:
-      "https://i.pinimg.com/736x/43/27/5c/43275c006aa1da7dfaeb0d9957e1d892.jpg",
+      "https://i.pinimg.com/736x/4b/87/0f/4b870fa5bb0a0bff0f872559d1c8628d.jpg",
     tags: [
       "Adobe Premiere",
       "After Effects",
