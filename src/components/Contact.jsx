@@ -198,7 +198,7 @@ const Contact = () => {
                 rows="4"
                 value={form.message}
                 onChange={handleChange}
-                placeholder="Tulis pesan kamu di sini..."
+                placeholder="Tulis pesan..."
                 className="bg-transparent focus:outline-none flex-grow text-white placeholder-gray-400 resize-none w-full text-sm sm:text-base"
                 required
                 disabled={sending}
