@@ -55,7 +55,7 @@ const Contact = () => {
         transition={{ duration: 0.6 }}
         className="text-4xl sm:text-5xl font-bold mb-12 text-center text-white tracking-widest"
       >
-        Hubungi Kami
+        Kontak Saya
       </motion.h1>
 
       <motion.div
