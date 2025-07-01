@@ -48,28 +48,27 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center px-4 sm:px-6 md:px-10 py-16">
+    <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center justify-center px-4 sm:px-6 md:px-10 py-16">
       <motion.h1
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-3xl sm:text-4xl font-bold mb-8 tracking-wide text-center"
+        className="text-4xl sm:text-5xl font-bold mb-12 text-center text-white tracking-widest"
       >
-        Kontak
+        Hubungi Kami
       </motion.h1>
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="w-200 max-w-2xl bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl p-6 sm:p-10 flex flex-col md:flex-row items-start gap-4"
+        className="w-full max-w-5xl bg-white/10 backdrop-blur-md border border-gray-700 rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.3)] p-6 sm:p-10 flex flex-col md:flex-row gap-10"
       >
         {/* Contact Info */}
-        <div className="md:w-1/2 w-full flex flex-col gap-6 items-center">
-          <h2 className="text-xl font-semibold">Hubungi Kami</h2>
+        <div className="md:w-1/2 w-full flex flex-col gap-6 items-center text-center">
+          <h2 className="text-xl font-semibold text-yellow-300">Info Kontak</h2>
 
-          {/* Icon Cards with Neon Glow */}
-          <div className="flex gap-6">
+          <div className="flex gap-6 justify-center">
             {[
               {
                 icon: <Mail size={28} />,
@@ -83,7 +82,7 @@ const Contact = () => {
               },
               {
                 icon: <MapPin size={28} />,
-                link: "https://www.google.com/maps/place/Grogol+petamburan,+West+Jakarta+City,+Jakarta/@-6.1639651,106.7659609,14z/data=!3m1!4b1!4m6!3m5!1s0x2e69f64443e58dcb:0x1cdeacf61286820a!8m2!3d-6.161698!4d106.7846412!16zL20vMGdjNHk1?entry=ttu&g_ep=EgoyMDI1MDYyMi4wIKXMDSoASAFQAw%3D%3D",
+                link: "https://www.google.com/maps/place/Grogol+petamburan,+West+Jakarta+City,+Jakarta",
                 color: "yellow",
               },
             ].map(({ icon, link, color }, i) => (
@@ -92,32 +91,32 @@ const Contact = () => {
                 href={link}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.2 }}
-                className={`p-4 rounded-full bg-${color}-900 text-${color}-400 hover:shadow-[0_0_15px_3px_rgba(255,255,255,0.5)] transition-all duration-300`}
+                whileHover={{ scale: 1.25, rotate: 5 }}
+                className={`p-4 rounded-xl bg-${color}-900/30 text-${color}-300 hover:shadow-[0_0_20px_4px_rgba(255,255,255,0.4)] transition-all duration-300 border border-${color}-500/40`}
               >
                 {icon}
               </motion.a>
             ))}
           </div>
 
-          {/* Toggle Google Map */}
+          {/* Map Button */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             onClick={() => setShowMap(!showMap)}
-            className="mt-4 px-4 py-2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900 font-semibold rounded-md transition-all duration-300 shadow-md"
+            className="mt-4 px-4 py-2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900 font-semibold rounded-md shadow-md transition-all duration-300"
           >
             {showMap ? "Tutup Peta" : "Lihat Peta"}
           </motion.button>
 
           {showMap && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="mt-4 w-full h-64 rounded-lg overflow-hidden border border-yellow-400 shadow-lg"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="mt-4 w-full h-64 rounded-lg overflow-hidden border border-yellow-400 shadow-[0_0_20px_rgba(255,255,0,0.5)]"
             >
               <iframe
                 title="Lokasi Peta"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.5859909116357!2d106.77003577500994!3d-6.200425460687334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f64443e58dcb%3A0x1cdeacf61286820a!2sGrogol%20petamburan%2C%20West%20Jakarta%20City%2C%20Jakarta!5e0!3m2!1sen!2sid!4v1719400000000!5m2!1sen!2sid"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31734.01556248015!2d106.7865605!3d-6.1639655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f64443e58dcb%3A0x1cdeacf61286820a!2sGrogol%20petamburan%2C%20West%20Jakarta%20City%2C%20Jakarta!5e0!3m2!1sen!2sid!4v1751376627297!5m2!1sen!2sid"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -130,12 +129,15 @@ const Contact = () => {
         </div>
 
         {/* Contact Form */}
-        <form
+        <motion.form
           onSubmit={handleSubmit}
-          className="bg-gray-900 rounded-xl p-6 w-full md:w-1/2 shadow-md"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="bg-gray-900/80 rounded-xl p-6 w-full md:w-1/2 shadow-[0_4px_20px_rgba(0,0,0,0.5)] border border-gray-700"
           noValidate
         >
-          <h2 className="text-lg font-semibold mb-4">Kirim Pesan</h2>
+          <h2 className="text-lg font-semibold mb-4 text-white">Kirim Pesan</h2>
 
           {/* Input Fields */}
           {[
@@ -144,7 +146,7 @@ const Contact = () => {
               label: "Nama",
               type: "text",
               icon: <User size={18} />,
-              placeholder: "nama",
+              placeholder: "nama lengkap",
               value: form.name,
               error: errors.name,
             },
@@ -221,7 +223,7 @@ const Contact = () => {
           >
             {sending ? "Mengirim..." : "Kirim"} <Send size={18} />
           </motion.button>
-        </form>
+        </motion.form>
       </motion.div>
     </div>
   );
