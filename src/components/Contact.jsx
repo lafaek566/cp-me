@@ -173,6 +173,9 @@ const Contact = () => {
                   type={type}
                   id={id}
                   name={id}
+                  autoComplete={
+                    id === "name" ? "name" : id === "email" ? "email" : "off"
+                  }
                   value={value}
                   onChange={handleChange}
                   placeholder={placeholder}
