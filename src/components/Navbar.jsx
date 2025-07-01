@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-scroll";
-import logo from "../assets/elv.png";
+import logo from "../assets/pf.jpg";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
