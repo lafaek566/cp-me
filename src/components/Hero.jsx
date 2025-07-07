@@ -30,7 +30,7 @@ const Hero = () => {
   return (
     <div
       id="hero"
-      className="relative w-full min-h-[80vh] bg-black overflow-hidden text-white flex items-center justify-center px-4 sm:px-6 md:px-12"
+      className="mt-9 relative w-full min-h-[80vh] bg-black overflow-hidden text-white flex items-center justify-center px-4 sm:px-6 md:px-12"
     >
       <div
         className="z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-7xl w-full"
