@@ -1,51 +1,10 @@
 import React, { useState } from "react";
-import { Mail, Phone, MapPin, Send, User, MessageCircle } from "lucide-react";
-import { send } from "@emailjs/browser";
+import { Mail, Phone, MapPin, FileText } from "lucide-react";
 import { motion } from "framer-motion";
+import CVPreview from "./CVPreview";
 
 const Contact = () => {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [errors, setErrors] = useState({});
-  const [sending, setSending] = useState(false);
   const [showMap, setShowMap] = useState(false);
-
-  const validate = () => {
-    let errs = {};
-    if (!form.name.trim()) errs.name = "Nama harus diisi";
-    if (!form.email.trim()) errs.email = "Email harus diisi";
-    else if (!/\S+@\S+\.\S+/.test(form.email)) errs.email = "Email tidak valid";
-    if (!form.message.trim()) errs.message = "Pesan harus diisi";
-    setErrors(errs);
-    return Object.keys(errs).length === 0;
-  };
-
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validate()) return;
-    setSending(true);
-    try {
-      await send(
-        "service_mqocanv",
-        "template_r25wulu",
-        {
-          name: form.name,
-          email: form.email,
-          message: form.message,
-        },
-        "TOqnOmxnQmeZEzetE"
-      );
-      alert("Pesan terkirim! Terima kasih.");
-      setForm({ name: "", email: "", message: "" });
-    } catch (error) {
-      console.error("EmailJS error:", error);
-      alert("Gagal mengirim pesan, coba lagi nanti.");
-    } finally {
-      setSending(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center justify-center px-4 sm:px-6 md:px-10 py-16">
@@ -62,57 +21,82 @@ const Contact = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="w-full max-w-5xl bg-white/10 backdrop-blur-md border border-gray-700 rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.3)] p-6 sm:p-10 flex flex-col md:flex-row gap-10"
+        className="w-full max-w-6xl bg-white/10 backdrop-blur-md border border-gray-700 rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.3)] p-6 sm:p-10 flex flex-col lg:flex-row gap-10"
       >
-        {/* Contact Info */}
-        <div className="md:w-1/2 w-full flex flex-col gap-6 items-center text-center">
-          <h2 className="text-xl font-semibold text-yellow-300">Info Kontak</h2>
+        {/* Contact Info - Left Side */}
+        <div className="lg:w-1/3 w-full flex flex-col gap-8 items-center text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-300 to-red-300 mb-6">
+              Hubungi Saya
+            </h2>
+            <p className="text-gray-300 text-sm leading-relaxed mb-6">
+              Ada pertanyaan? Hubungi saya melalui WhatsApp atau email. Respon cepat dijamin! 🚀
+            </p>
+          </motion.div>
 
-          <div className="flex gap-6 justify-center">
+          <div className="flex gap-6 justify-center flex-wrap">
             {[
               {
                 icon: <Mail size={28} />,
                 link: "mailto:michaelenahak@gmail.com",
                 color: "blue",
+                label: "Email",
               },
               {
                 icon: <Phone size={28} />,
                 link: "https://wa.me/6281318660725?text=Hi%2C%20terima%20kasih%20sudah%20menghubungi.%20Saya%20Elv%2C%20ada%20yang%20ingin%20ditanyakan%3F",
                 color: "green",
+                label: "WhatsApp",
               },
               {
                 icon: <MapPin size={28} />,
                 link: "https://www.google.com/maps/place/Grogol+petamburan,+West+Jakarta+City,+Jakarta",
                 color: "yellow",
+                label: "Lokasi",
               },
-            ].map(({ icon, link, color }, i) => (
-              <motion.a
+            ].map(({ icon, link, color, label }, i) => (
+              <motion.div
                 key={i}
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.25, rotate: 5 }}
-                className={`p-4 rounded-xl bg-${color}-900/30 text-${color}-300 hover:shadow-[0_0_20px_4px_rgba(255,255,255,0.4)] transition-all duration-300 border border-${color}-500/40`}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 + i * 0.1 }}
+                className="flex flex-col items-center"
               >
-                {icon}
-              </motion.a>
+                <motion.a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.3, rotate: 10 }}
+                  whileTap={{ scale: 0.9 }}
+                  className={`p-4 rounded-2xl bg-${color}-900/30 text-${color}-300 hover:shadow-[0_0_25px_4px_rgba(255,255,255,0.5)] transition-all duration-300 border-2 border-${color}-500/40 hover:border-${color}-400`}
+                >
+                  {icon}
+                </motion.a>
+                <span className="text-xs text-gray-400 mt-2 font-semibold">{label}</span>
+              </motion.div>
             ))}
           </div>
 
           {/* Map Button */}
           <motion.button
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.92 }}
             onClick={() => setShowMap(!showMap)}
-            className="mt-4 px-4 py-2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-yellow-900 font-semibold rounded-md shadow-md transition-all duration-300"
+            className="mt-6 px-6 py-3 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 text-yellow-900 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-sm md:text-base"
           >
-            {showMap ? "Tutup Peta" : "Lihat Peta"}
+            {showMap ? "Tutup Peta" : "📍 Lihat Lokasi"}
           </motion.button>
 
           {showMap && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="mt-4 w-full h-64 rounded-lg overflow-hidden border border-yellow-400 shadow-[0_0_20px_rgba(255,255,0,0.5)]"
+              transition={{ duration: 0.4 }}
+              className="w-full h-96 md:h-[500px] lg:h-[600px] rounded-2xl overflow-hidden border-2 border-yellow-400 shadow-[0_0_30px_rgba(255,255,0,0.6)]"
             >
               <iframe
                 title="Lokasi Peta"
@@ -128,105 +112,15 @@ const Contact = () => {
           )}
         </div>
 
-        {/* Contact Form */}
-        <motion.form
-          onSubmit={handleSubmit}
+        {/* CV Section - Right Side */}
+        <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="bg-gray-900/80 rounded-xl p-6 w-full md:w-1/2 shadow-[0_4px_20px_rgba(0,0,0,0.5)] border border-gray-700"
-          noValidate
+          className="lg:w-2/3 w-full flex flex-col gap-6"
         >
-          <h2 className="text-lg font-semibold mb-4 text-white">Kirim Pesan</h2>
-
-          {/* Input Fields */}
-          {[
-            {
-              id: "name",
-              label: "Nama",
-              type: "text",
-              icon: <User size={18} />,
-              placeholder: "nama lengkap",
-              value: form.name,
-              error: errors.name,
-            },
-            {
-              id: "email",
-              label: "Email",
-              type: "email",
-              icon: <Mail size={18} />,
-              placeholder: "email@domain.com",
-              value: form.email,
-              error: errors.email,
-            },
-          ].map(({ id, label, type, icon, placeholder, value, error }) => (
-            <div className="mb-4" key={id}>
-              <label
-                htmlFor={id}
-                className="block mb-1 font-semibold text-sm text-gray-300"
-              >
-                {label}
-              </label>
-              <div className="flex items-center gap-2 bg-gray-700 rounded-md px-3 py-2">
-                {icon}
-                <input
-                  type={type}
-                  id={id}
-                  name={id}
-                  autoComplete={
-                    id === "name" ? "name" : id === "email" ? "email" : "off"
-                  }
-                  value={value}
-                  onChange={handleChange}
-                  placeholder={placeholder}
-                  className="bg-transparent focus:outline-none flex-grow text-white placeholder-gray-400 w-full text-sm sm:text-base"
-                  disabled={sending}
-                />
-              </div>
-              {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
-            </div>
-          ))}
-
-          {/* Message */}
-          <div className="mb-5">
-            <label
-              htmlFor="message"
-              className="block mb-1 font-semibold text-sm text-gray-300"
-            >
-              Pesan
-            </label>
-            <div className="flex items-start gap-2 bg-gray-700 rounded-md px-3 py-2">
-              <MessageCircle size={18} className="text-gray-400 mt-1" />
-              <textarea
-                id="message"
-                name="message"
-                rows="4"
-                value={form.message}
-                onChange={handleChange}
-                placeholder="Tulis pesan..."
-                className="bg-transparent focus:outline-none flex-grow text-white placeholder-gray-400 resize-none w-full text-sm sm:text-base"
-                required
-                disabled={sending}
-              />
-            </div>
-            {errors.message && (
-              <p className="text-red-500 text-xs mt-1">{errors.message}</p>
-            )}
-          </div>
-
-          {/* Submit Button */}
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            type="submit"
-            disabled={sending}
-            className={`w-full bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 rounded-md py-3 font-semibold text-white flex justify-center items-center gap-2 shadow-lg transition-colors ${
-              sending ? "opacity-60 cursor-not-allowed" : ""
-            }`}
-          >
-            {sending ? "Mengirim..." : "Kirim"} <Send size={18} />
-          </motion.button>
-        </motion.form>
+          <CVPreview />
+        </motion.div>
       </motion.div>
     </div>
   );

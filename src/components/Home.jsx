@@ -6,6 +6,8 @@ import Card from "./Card";
 import Contact from "./Contact";
 import Footer from "./Footer";
 import ScrollToTopButton from "../components/ScrollToTopButton"; // sesuaikan path
+import ChatWidget from "./ChatWidget";
+import AnalyticsViewer from "./AnalyticsViewer";
 
 export default function Home() {
   return (
@@ -17,6 +19,8 @@ export default function Home() {
       <Contact />
       <Footer />
       <ScrollToTopButton />
+      <ChatWidget />
+      <AnalyticsViewer />
     </div>
   );
 }

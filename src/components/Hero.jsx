@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Link } from "react-scroll";
@@ -111,22 +111,32 @@ const Hero = () => {
             </motion.div>
           </AnimatePresence>
 
-          {/* Scroll Prompt */}
+          {/* Hubungi Saya Button */}
           <AnimatePresence>
             {showScrollPrompt && (
-              <motion.div
+              <motion.button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // Trigger floating button click
+                  const floatingBtn = document.querySelector(".floating-button");
+                  if (floatingBtn) {
+                    floatingBtn.click();
+                  }
+                }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.5 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 className="absolute bottom-10 sm:bottom-8 md:bottom-10 right-6 sm:right-10 md:right-12
-                           text-white bg-orange-600/90 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full cursor-pointer
-                           shadow-lg select-none text-xs sm:text-sm md:text-base"
+                           bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700
+                           text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full cursor-pointer
+                           shadow-lg select-none text-xs sm:text-sm md:text-base font-semibold
+                           transition-all duration-300 border border-green-400/50"
               >
-                <Link to="about" smooth={true} duration={500}>
-                  Scroll ↓
-                </Link>
-              </motion.div>
+                💬 Hubungi Saya
+              </motion.button>
             )}
           </AnimatePresence>
         </div>

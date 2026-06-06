@@ -91,22 +91,47 @@ const getCategoryIcon = (category, isActive) => {
 
 const DetailCard = ({ detail, onClick }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 20 }}
-    transition={{ duration: 0.3 }}
-    whileHover={{ scale: 1.05 }}
-    className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow p-3 text-xs text-gray-800 dark:text-white flex flex-col items-center cursor-pointer transition"
+    initial={{ opacity: 0, y: 30, scale: 0.85 }}
+    animate={{ opacity: 1, y: 0, scale: 1 }}
+    exit={{ opacity: 0, y: -30, scale: 0.85 }}
+    transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+    whileHover={{
+      scale: 1.15,
+      y: -12,
+      boxShadow: "0 25px 50px rgba(59, 130, 246, 0.6)",
+    }}
+    whileTap={{ scale: 0.92 }}
+    className="w-full bg-gradient-to-br from-white via-blue-50 to-indigo-100 dark:from-gray-600 dark:via-gray-700 dark:to-gray-800 rounded-2xl shadow-xl p-0 text-sm text-gray-800 dark:text-white flex flex-col items-center cursor-pointer transition-all hover:shadow-2xl border-2 border-blue-200 dark:border-blue-400 overflow-hidden"
     onClick={() => onClick(detail)}
-    title="Klik untuk lihat detail proyek"
+    title="🔥 Klik untuk lihat detail proyek"
   >
-    <img
-      src={detail.image}
-      alt="detail"
-      className="w-full aspect-[4/3] object-cover rounded mb-2"
-      loading="lazy"
-    />
-    <p className="text-center">{detail.description}</p>
+    {/* Image Container - PRESISI SQUARE SEMPURNA */}
+    <div className="relative w-full aspect-square overflow-hidden bg-gray-900">
+      <motion.img
+        src={detail.image}
+        alt="detail"
+        className="w-full h-full object-cover"
+        loading="lazy"
+        whileHover={{ scale: 1.1 }}
+        transition={{ duration: 0.4 }}
+      />
+      {/* Overlay Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+    </div>
+
+    {/* Content Container - Lebih Besar */}
+    <div className="w-full px-5 py-6 md:py-8 flex flex-col items-center flex-grow justify-between gap-4">
+      <p className="text-center font-bold text-sm md:text-base lg:text-lg line-clamp-2 leading-relaxed text-white dark:text-white">
+        {detail.description}
+      </p>
+      <motion.span 
+        animate={{ x: [0, 5, 0], y: [0, -3, 0] }}
+        transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+        className="text-base md:text-lg text-blue-600 dark:text-cyan-400 font-bold flex items-center gap-1 hover:scale-110 transition-transform"
+      >
+        ✨ Klik →
+      </motion.span>
+    </div>
   </motion.div>
 );
 
@@ -228,28 +253,54 @@ const PortfolioCard = ({
           )}
         </div>
 
-        <button
+        <motion.button
           onClick={onToggle}
-          className={`mt-4 inline-flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-full transition duration-300 border border-blue-400 shadow-sm hover:shadow-md ${
+          whileHover={{
+            scale: 1.12,
+            boxShadow: "0 20px 40px rgba(59, 130, 246, 0.6)",
+          }}
+          whileTap={{ scale: 0.92 }}
+          animate={!isExpanded ? { 
+            y: [0, -5, 0],
+            boxShadow: [
+              "0 10px 20px rgba(59, 130, 246, 0.3)",
+              "0 20px 40px rgba(59, 130, 246, 0.6)",
+              "0 10px 20px rgba(59, 130, 246, 0.3)"
+            ]
+          } : {}}
+          transition={{
+            y: { repeat: Infinity, duration: 1.5, ease: "easeInOut" },
+            boxShadow: { repeat: Infinity, duration: 1.5, ease: "easeInOut" },
+          }}
+          className={`mt-6 w-full inline-flex items-center justify-center gap-3 text-base md:text-lg font-bold px-8 py-4 rounded-xl transition duration-300 border-2 shadow-2xl transform ${
             isExpanded
-              ? "bg-red-100 text-red-600 hover:bg-red-200"
-              : "bg-blue-100 text-blue-600 hover:bg-blue-200"
+              ? "bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white border-red-600 hover:shadow-red-600/60"
+              : "bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600 text-white border-blue-400 hover:shadow-blue-500/60"
           }`}
         >
-          👁️ {isExpanded ? "Sembunyikan Detail" : "Lihat Detail"}
-        </button>
+          <span className="text-2xl">👁️</span> 
+          <span>{isExpanded ? "Sembunyikan Detail" : "Lihat Detail Proyek"}</span>
+          {!isExpanded && <span className="ml-2 animate-bounce">→</span>}
+        </motion.button>
 
         <AnimatePresence>
           {isExpanded && (
             <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.3 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8 p-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 dark:from-gray-700 dark:via-gray-650 dark:to-gray-600 rounded-2xl border-2 border-blue-300 dark:border-blue-500 shadow-xl"
+              initial={{ opacity: 0, y: 20, height: 0 }}
+              animate={{ opacity: 1, y: 0, height: "auto" }}
+              exit={{ opacity: 0, y: 20, height: 0 }}
+              transition={{ duration: 0.5 }}
             >
               {details.map((detail, idx) => (
-                <DetailCard key={idx} detail={detail} onClick={onDetailClick} />
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ delay: idx * 0.12, duration: 0.4 }}
+                >
+                  <DetailCard detail={detail} onClick={onDetailClick} />
+                </motion.div>
               ))}
             </motion.div>
           )}
@@ -297,14 +348,25 @@ export default function Portfolio() {
           className="mx-auto max-w-7xl grid place-items-center grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8"
         >
           {projects.map((project, index) => (
-            <PortfolioCard
+            <motion.div
               key={index}
-              {...project}
-              isExpanded={expandedIndex === index}
-              onToggle={() => handleToggle(index)}
-              onDetailClick={handleDetailClick}
-              highlighted={project.title === "Full Stack Developer"}
-            />
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.15,
+                ease: "easeOut",
+              }}
+              viewport={{ once: true }}
+            >
+              <PortfolioCard
+                {...project}
+                isExpanded={expandedIndex === index}
+                onToggle={() => handleToggle(index)}
+                onDetailClick={handleDetailClick}
+                highlighted={project.title === "Full Stack Developer"}
+              />
+            </motion.div>
           ))}
         </motion.div>
       </div>

@@ -10,6 +10,9 @@ import v1 from "../assets/v1.jpg";
 import v2 from "../assets/v2.jpg";
 import v3 from "../assets/v3.jpg";
 import v4 from "../assets/v4.jpg";
+import atcImage from "../assets/ATC.png";
+import scrappingImage from "../assets/scrapping.webp";
+import sentrixImage from "../assets/sentrix.png";
 
 const projects = [
   {
@@ -49,6 +52,21 @@ const projects = [
         image: dbImage,
         description: "Barbershop",
         detailLink: "https://github.com/lafaek566/Car",
+      },
+      {
+        image: atcImage,
+        description: "🛩️ Air Traffic Control (ATC) Surveillance",
+        detailLink: "http://adsb.sibernetik.co.id/",
+      },
+      {
+        image: scrappingImage,
+        description: "🔍 Data Scraping & Automation",
+        detailLink: "https://github.com/lafaek566/reverse-tokped",
+      },
+      {
+        image: sentrixImage,
+        description: "📊 Sentrix - Platform Digital Marketing",
+        detailLink: "https://sentrix.id/",
       },
     ],
   },
