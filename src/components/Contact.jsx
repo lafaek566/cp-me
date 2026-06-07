@@ -34,30 +34,18 @@ const Contact = () => {
               Hubungi Saya
             </h2>
             <p className="text-gray-300 text-sm leading-relaxed mb-6">
-              Ada pertanyaan? Hubungi saya melalui WhatsApp atau email. Respon cepat dijamin! 🚀
+              Ada pertanyaan? Hubungi saya melalui WhatsApp atau email.
             </p>
           </motion.div>
 
           <div className="flex gap-6 justify-center flex-wrap">
             {[
-              {
-                icon: <Mail size={28} />,
-                link: "mailto:michaelenahak@gmail.com",
-                color: "blue",
-                label: "Email",
-              },
-              {
-                icon: <Phone size={28} />,
-                link: "https://wa.me/6281318660725?text=Hi%2C%20terima%20kasih%20sudah%20menghubungi.%20Saya%20Elv%2C%20ada%20yang%20ingin%20ditanyakan%3F",
-                color: "green",
-                label: "WhatsApp",
-              },
-              {
-                icon: <MapPin size={28} />,
-                link: "https://www.google.com/maps/place/Grogol+petamburan,+West+Jakarta+City,+Jakarta",
-                color: "yellow",
-                label: "Lokasi",
-              },
+              // {
+              //   icon: <MapPin size={28} />,
+              //   link: "https://www.google.com/maps/place/Grogol+petamburan,+West+Jakarta+City,+Jakarta",
+              //   color: "yellow",
+              //   label: "Lokasi",
+              // },
             ].map(({ icon, link, color, label }, i) => (
               <motion.div
                 key={i}

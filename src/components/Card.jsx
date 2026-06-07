@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code2, Paintbrush2 } from "lucide-react";
+import { Code2, Paintbrush2, Search } from "lucide-react";
 import {
   FaReact,
   FaNodeJs,
@@ -96,17 +96,17 @@ const DetailCard = ({ detail, onClick }) => (
     exit={{ opacity: 0, y: -30, scale: 0.85 }}
     transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
     whileHover={{
-      scale: 1.15,
-      y: -12,
-      boxShadow: "0 25px 50px rgba(59, 130, 246, 0.6)",
+      scale: 1.12,
+      y: -10,
+      boxShadow: "0 20px 40px rgba(59, 130, 246, 0.6)",
     }}
     whileTap={{ scale: 0.92 }}
-    className="w-full bg-gradient-to-br from-white via-blue-50 to-indigo-100 dark:from-gray-600 dark:via-gray-700 dark:to-gray-800 rounded-2xl shadow-xl p-0 text-sm text-gray-800 dark:text-white flex flex-col items-center cursor-pointer transition-all hover:shadow-2xl border-2 border-blue-200 dark:border-blue-400 overflow-hidden"
+    className="w-full bg-gradient-to-br from-white via-blue-50 to-indigo-100 dark:from-gray-600 dark:via-gray-700 dark:to-gray-800 rounded-xl shadow-lg p-0 text-sm text-gray-800 dark:text-white flex flex-col items-center cursor-pointer transition-all hover:shadow-2xl border-2 border-blue-200 dark:border-blue-400 overflow-hidden"
     onClick={() => onClick(detail)}
     title="🔥 Klik untuk lihat detail proyek"
   >
-    {/* Image Container - PRESISI SQUARE SEMPURNA */}
-    <div className="relative w-full aspect-square overflow-hidden bg-gray-900">
+    {/* Image Container - Sangat Tinggi */}
+    <div className="relative w-full aspect-[1/2.5] overflow-hidden bg-gray-900">
       <motion.img
         src={detail.image}
         alt="detail"
@@ -116,18 +116,18 @@ const DetailCard = ({ detail, onClick }) => (
         transition={{ duration: 0.4 }}
       />
       {/* Overlay Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
     </div>
 
-    {/* Content Container - Lebih Besar */}
-    <div className="w-full px-5 py-6 md:py-8 flex flex-col items-center flex-grow justify-between gap-4">
-      <p className="text-center font-bold text-sm md:text-base lg:text-lg line-clamp-2 leading-relaxed text-white dark:text-white">
+    {/* Content Container - Jauh Lebih Besar */}
+    <div className="w-full px-6 py-8 flex flex-col items-center flex-grow justify-center gap-5">
+      <p className="text-center font-bold text-base line-clamp-2 leading-snug text-white dark:text-white">
         {detail.description}
       </p>
       <motion.span 
-        animate={{ x: [0, 5, 0], y: [0, -3, 0] }}
+        animate={{ x: [0, 4, 0], y: [0, -2, 0] }}
         transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-        className="text-base md:text-lg text-blue-600 dark:text-cyan-400 font-bold flex items-center gap-1 hover:scale-110 transition-transform"
+        className="text-lg text-blue-600 dark:text-cyan-400 font-bold flex items-center gap-2 hover:scale-110 transition-transform"
       >
         ✨ Klik →
       </motion.span>
@@ -150,7 +150,27 @@ const PortfolioCard = ({
   isExpanded,
   onToggle,
   onDetailClick,
+  detailsExpanded,
+  onToggleDetailsExpand,
+  projectIndex,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const ITEMS_PER_PAGE = 3;
+  const shouldShowSeeMore = details.length > ITEMS_PER_PAGE;
+  const displayedDetails = detailsExpanded ? details : details.slice(0, ITEMS_PER_PAGE);
+  const remainingItems = details.length - ITEMS_PER_PAGE;
+
+  const handleDirectLink = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      if (details.length === 0 && demoLink) {
+        window.open(demoLink, '_blank');
+      } else if (details.length === 0 && codeLink) {
+        window.open(codeLink, '_blank');
+      }
+      setIsLoading(false);
+    }, 800);
+  };
   return (
     <motion.div
       initial={{ opacity: 0, y: 40, scale: 0.95 }}
@@ -254,13 +274,19 @@ const PortfolioCard = ({
         </div>
 
         <motion.button
-          onClick={onToggle}
+          onClick={() => {
+            if (details.length === 0) {
+              handleDirectLink();
+            } else {
+              onToggle();
+            }
+          }}
           whileHover={{
             scale: 1.12,
             boxShadow: "0 20px 40px rgba(59, 130, 246, 0.6)",
           }}
           whileTap={{ scale: 0.92 }}
-          animate={!isExpanded ? { 
+          animate={!isExpanded && details.length > 0 ? { 
             y: [0, -5, 0],
             boxShadow: [
               "0 10px 20px rgba(59, 130, 246, 0.3)",
@@ -273,35 +299,91 @@ const PortfolioCard = ({
             boxShadow: { repeat: Infinity, duration: 1.5, ease: "easeInOut" },
           }}
           className={`mt-6 w-full inline-flex items-center justify-center gap-3 text-base md:text-lg font-bold px-8 py-4 rounded-xl transition duration-300 border-2 shadow-2xl transform ${
-            isExpanded
+            isExpanded && details.length > 0
               ? "bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white border-red-600 hover:shadow-red-600/60"
               : "bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-600 text-white border-blue-400 hover:shadow-blue-500/60"
           }`}
         >
-          <span className="text-2xl">👁️</span> 
-          <span>{isExpanded ? "Sembunyikan Detail" : "Lihat Detail Proyek"}</span>
-          {!isExpanded && <span className="ml-2 animate-bounce">→</span>}
+          <Search className="w-5 h-5" />
+          <span>
+            {details.length === 0 
+              ? (demoLink ? "Buka Demo" : "Lihat Proyek")
+              : (isExpanded ? "Sembunyikan Detail" : "Lihat Detail Proyek")
+            }
+          </span>
+          {!isExpanded && details.length > 0 && <span className="ml-2 animate-bounce">→</span>}
         </motion.button>
+
+        <AnimatePresence>
+          {isLoading && (
+            <motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <motion.div
+                className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4"
+                initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.8, opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
+              >
+                <div className="flex flex-col items-center gap-4">
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+                  >
+                    <div className="w-16 h-16 rounded-full border-4 border-blue-200 dark:border-blue-600 border-t-blue-600 dark:border-t-cyan-400"></div>
+                  </motion.div>
+                  <div className="text-center">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                      {title}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Membuka proyek...
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <AnimatePresence>
           {isExpanded && (
             <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8 p-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 dark:from-gray-700 dark:via-gray-650 dark:to-gray-600 rounded-2xl border-2 border-blue-300 dark:border-blue-500 shadow-xl"
+              className="mt-8 p-6 bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100 dark:from-gray-700 dark:via-gray-650 dark:to-gray-600 rounded-xl border border-blue-300 dark:border-blue-500 shadow-lg"
               initial={{ opacity: 0, y: 20, height: 0 }}
               animate={{ opacity: 1, y: 0, height: "auto" }}
               exit={{ opacity: 0, y: 20, height: 0 }}
               transition={{ duration: 0.5 }}
             >
-              {details.map((detail, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ delay: idx * 0.12, duration: 0.4 }}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {displayedDetails.map((detail, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ delay: idx * 0.08, duration: 0.4 }}
+                  >
+                    <DetailCard detail={detail} onClick={onDetailClick} />
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* See More Button */}
+              {shouldShowSeeMore && (
+                <motion.button
+                  onClick={() => onToggleDetailsExpand(projectIndex)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full mt-4 py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold rounded-lg transition-colors"
                 >
-                  <DetailCard detail={detail} onClick={onDetailClick} />
-                </motion.div>
-              ))}
+                  {detailsExpanded ? `← Sembunyikan (${remainingItems} item lainnya)` : `Lihat Lebih Banyak (+${remainingItems})`}
+                </motion.button>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
@@ -314,14 +396,20 @@ export default function Portfolio() {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [selectedDetail, setSelectedDetail] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [expandedDetailsIndex, setExpandedDetailsIndex] = useState(null);
 
   const handleToggle = (index) => {
     setExpandedIndex((prev) => (prev === index ? null : index));
+    setExpandedDetailsIndex(null); // Reset details expansion
   };
 
   const handleDetailClick = (detail) => {
     setSelectedDetail(detail);
     setModalOpen(true);
+  };
+
+  const toggleDetailsExpand = (index) => {
+    setExpandedDetailsIndex((prev) => (prev === index ? null : index));
   };
 
   return (
@@ -365,6 +453,9 @@ export default function Portfolio() {
                 onToggle={() => handleToggle(index)}
                 onDetailClick={handleDetailClick}
                 highlighted={project.title === "Full Stack Developer"}
+                detailsExpanded={expandedDetailsIndex === index}
+                onToggleDetailsExpand={toggleDetailsExpand}
+                projectIndex={index}
               />
             </motion.div>
           ))}

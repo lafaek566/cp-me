@@ -16,61 +16,6 @@ import sentrixImage from "../assets/sentrix.png";
 
 const projects = [
   {
-    title: "Full Stack Developer",
-    description: "Sistem pemesanan Sesuai Keinginanmu.",
-    image:
-      "https://i.pinimg.com/736x/4b/c8/a1/4bc8a1873b16f428b6c209a09bdd9165.jpg",
-    tags: [
-      "JavaScript",
-      "React",
-      "Node.js",
-      "Express",
-      "PHP",
-      "Python",
-      "MySQL",
-    ],
-    demoLink: null,
-    codeLink: "https://github.com/lafaek566",
-    category: "Programming",
-    details: [
-      {
-        image: homecb,
-        description: "Halaman web Stream Video",
-        detailLink: "https://cinemaindo.cam/",
-      },
-      {
-        image: homeImage,
-        description: "Website CoffeeShop",
-        detailLink: "https://coffe-shop-ebon.vercel.app/",
-      },
-      {
-        image: cpHomeImage,
-        description: "Real Estate",
-        detailLink: "https://real-estate-web.pages.dev/",
-      },
-      {
-        image: dbImage,
-        description: "Barbershop",
-        detailLink: "https://github.com/lafaek566/Car",
-      },
-      {
-        image: atcImage,
-        description: "🛩️ Air Traffic Control (ATC) Surveillance",
-        detailLink: "http://adsb.sibernetik.co.id/",
-      },
-      {
-        image: scrappingImage,
-        description: "🔍 Data Scraping & Automation",
-        detailLink: "https://github.com/lafaek566/reverse-tokped",
-      },
-      {
-        image: sentrixImage,
-        description: "📊 Sentrix - Platform Digital Marketing",
-        detailLink: "https://sentrix.id/",
-      },
-    ],
-  },
-  {
     title: "Creative Media Projects",
     description:
       "Desain grafis & video promosi kreatif untuk media sosial & branding.",
@@ -138,6 +83,94 @@ const projects = [
           "https://www.tiktok.com/@suarasoares/video/7455885733253991698",
       },
     ],
+  },
+  {
+    title: "Full Stack Developer",
+    description: "Sistem pemesanan Sesuai Keinginanmu.",
+    image:
+      "https://i.pinimg.com/736x/4b/c8/a1/4bc8a1873b16f428b6c209a09bdd9165.jpg",
+    tags: [
+      "JavaScript",
+      "React",
+      "Node.js",
+      "Express",
+      "PHP",
+      "Python",
+      "MySQL",
+    ],
+    demoLink: null,
+    codeLink: "https://github.com/lafaek566",
+    category: "Programming",
+    details: [
+      {
+        image: homecb,
+        description: "Halaman web Stream Video",
+        detailLink: "https://cinemaindo.cam/",
+      },
+      {
+        image: homeImage,
+        description: "Website CoffeeShop",
+        detailLink: "https://coffe-shop-ebon.vercel.app/",
+      },
+      {
+        image: cpHomeImage,
+        description: "Real Estate",
+        detailLink: "https://real-estate-web.pages.dev/",
+      },
+      {
+        image: dbImage,
+        description: "Barbershop",
+        detailLink: "https://github.com/lafaek566/Car",
+      },
+      {
+        image: atcImage,
+        description: "🛩️ Air Traffic Control (ATC) Surveillance",
+        detailLink: "http://adsb.sibernetik.co.id/",
+      },
+      {
+        image: scrappingImage,
+        description: "🔍 Data Scraping & Automation",
+        detailLink: "https://github.com/lafaek566/reverse-tokped",
+      },
+      {
+        image: sentrixImage,
+        description: "📊 Sentrix - Platform Digital Marketing",
+        detailLink: "https://sentrix.id/",
+      },
+    ],
+  },
+  {
+    title: "🛩️ Air Traffic Control (ATC)",
+    description: "Sistem surveillans radar penerbangan real-time.",
+    image: atcImage,
+    tags: ["JavaScript", "React", "Node.js"],
+    demoLink: "http://adsb.sibernetik.co.id/",
+    codeLink: null,
+    category: "Programming",
+    details: [],
+    status: "Completed",
+  },
+  {
+    title: "📊 Sentrix Digital Marketing",
+    description: "Platform digital marketing terintegrasi.",
+    image: sentrixImage,
+    tags: ["React", "Node.js", "MySQL"],
+    demoLink: "https://sentrix.id/",
+    codeLink: null,
+    category: "Programming",
+    details: [],
+    status: "Completed",
+  },
+  {
+    title: "🔍 Data Scraping & Automation",
+    description: "Sistem scraping dan otomasi data e-commerce.",
+    image: scrappingImage,
+    tags: ["Python", "Node.js", "MySQL"],
+    demoLink: null,
+    codeLink: "https://github.com/lafaek566/reverse-tokped",
+    category: "Programming",
+    details: [],
+    status: "Completed",
   },
 ];
 

@@ -275,20 +275,18 @@ const CVPreview = () => {
           transition={{ delay: 0.6 }}
           className="flex gap-3 pt-6 border-t border-gray-700 flex-wrap"
         >
-          <motion.button
-            onClick={() => {
-              const link = document.createElement('a');
-              link.href = 'CV.pdf';
-              link.download = 'CV-Michael-Enahak.pdf';
-              link.click();
-            }}
+          <motion.a
+            href="/CV-Michael-Enahak.pdf"
+            download="CV-Michael-Enahak.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="flex-1 min-w-fit flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white font-bold rounded-xl shadow-lg transition-all text-sm"
           >
             <Download size={18} />
             Download CV
-          </motion.button>
+          </motion.a>
 
           <motion.a
             href="https://wa.me/6281318660725?text=Halo%20Elv!%20Saya%20tertarik%20dengan%20profile%20Anda.%20Bisa%20diskusi%3F"
@@ -302,15 +300,13 @@ const CVPreview = () => {
             Hubungi via WA
           </motion.a>
 
-          <motion.button
-            onClick={() => window.location.href = "mailto:michaelenahak@gmail.com"}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex-1 min-w-fit flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold rounded-xl shadow-lg transition-all text-sm cursor-pointer"
+          <a
+            href="mailto:michaelenahak@gmail.com"
+            className="flex-1 min-w-fit flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-bold rounded-xl shadow-lg transition-all text-sm cursor-pointer no-underline hover:shadow-xl transform hover:scale-105 active:scale-95"
           >
             <Mail size={18} />
             Email Me
-          </motion.button>
+          </a>
         </motion.div>
       </div>
     </div>
