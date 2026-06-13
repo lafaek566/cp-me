@@ -15,7 +15,7 @@ import { SiMysql, SiJavascript } from "react-icons/si";
 
 const CVPreview = () => {
   const cvData = {
-    name: "Elven",
+    name: "Elvren",
     title: "Full Stack Developer",
     email: "michaelenahak@gmail.com",
     phone: "+6281318660725",
